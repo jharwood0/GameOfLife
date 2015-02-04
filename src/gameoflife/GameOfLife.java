@@ -17,43 +17,33 @@ import javax.swing.JPanel;
  */
 public class GameOfLife {
 
-    /**
-     * @param args the command line arguments
-     */
     public static int rows = 20, cols = 20;
-    public static Color col1 = Color.BLACK, col2 = Color.WHITE;
+    public static Color dead = Color.WHITE;
+    public static Color alive = Color.BLACK;
     public static void main(String[] args) {
-        //TODO: implement these vars
         JPanel[][] panels = new JPanel[rows][cols];
         int x = 400,y = 400;
-        JFrame checkerBoard = new JFrame();
-        checkerBoard.setSize(x,y);
-        checkerBoard.setTitle("Game Of Life");
         
-        Container pane = checkerBoard.getContentPane();
+        
+        JFrame grid = new JFrame();
+        grid.setSize(x,y);
+        grid.setTitle("Game Of Life");
+        
+        Container pane = grid.getContentPane();
         pane.setLayout(new GridLayout(rows, cols));
         Color temp;
         
         for (int i = 0; i < rows; i++) {
-            if(i%2 == 0){
-                temp = col1;
-            }else{
-                temp = col2;
-            }
             for (int j = 0; j < cols; j++) {
                 panels[i][j] = new JPanel();
+
+                panels[i][j].setBackground(dead);
                 
-                panels[i][j].setBackground(temp);
-                if(temp.equals(col1)){
-                    temp = col2;
-                }else{
-                    temp = col1;
-                }
                 pane.add(panels[i][j]);
+                
             }
         }
-        checkerBoard.setVisible(true);
-        panels[0][5].setBackground(Color.BLUE);
+        grid.setVisible(true);
     }
     
 }
