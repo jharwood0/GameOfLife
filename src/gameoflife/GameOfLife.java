@@ -9,8 +9,10 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.util.Random;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
 
 /**
  *
@@ -80,30 +82,17 @@ public class GameOfLife {
             neighbours++;
         }
         if (isAlive(row, col) == 1) {
+            //System.out.println(neighbours);
             switch (neighbours) {
-                case 0:
+                case 0: case 1:
                     panels[row][col].setBackground(dead);
                     break;
-                case 1:
+                case 2: case 3:
+                    break;
+                case 4: case 5: case 6: case 7: case 8:
                     panels[row][col].setBackground(dead);
                     break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    panels[row][col].setBackground(dead);
-                    break;
-                case 5:
-                    panels[row][col].setBackground(dead);
-                    break;
-                case 6:
-                    panels[row][col].setBackground(dead);
-                    break;
-                case 7:
-                    panels[row][col].setBackground(dead);
-                    break;
-                case 8:
+                default:
                     panels[row][col].setBackground(dead);
                     break;
             }
@@ -124,13 +113,13 @@ public class GameOfLife {
 
         Container pane = grid.getContentPane();
         pane.setLayout(new GridLayout(rows, cols));
-        Color temp;
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 panels[i][j] = new JPanel();
 
                 panels[i][j].setBackground(dead);
+                panels[i][j].setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
                 pane.add(panels[i][j]);
 
@@ -155,7 +144,7 @@ public class GameOfLife {
                     rules(i, j);
                 }
             }
-            Thread.sleep(200);
+            Thread.sleep(100);
         }
 
     }
