@@ -20,20 +20,24 @@ import javax.swing.border.EtchedBorder;
  */
 public class GameOfLife {
 
-    public static int rows = 130, cols = 130, initial = 800;
+    public static int rows = 130, cols = 130, initial = 1000;
     public static Color dead = Color.WHITE;
     public static Color alive = Color.BLACK;
     public static JPanel[][] panels = new JPanel[rows][cols];
 
     public static int isAlive(int row, int col) {
-        //System.out.println("check: " + row + " " + " " + col);
-        if (row >= rows || col >= cols || row <= 0 || col <= 0) {
+        
+        if (row >= rows || col >= cols || row < 0 || col < 0) {
+            //System.out.println("check: " + row + " " + " " + col);
             return -1;
         }
         if(panels[row][col].getBackground().equals(alive)){
+            //System.out.println("check: " + row + " " + " " + col);
             return 1;
+        }else if (panels[row][col].getBackground().equals(dead)){
+            return 0;
         }
-        return 0;
+        return -1;
     }
 
     public static void rules(int row, int col) {
@@ -96,11 +100,8 @@ public class GameOfLife {
                     panels[row][col].setBackground(dead);
                     break;
             }
-        } else {
-            if(neighbours == 3){
-                panels[row][col].setBackground(alive);
-            }
-
+        } else if(isAlive(row,col) == 0 && neighbours == 3) {
+            panels[row][col].setBackground(alive);
         }
     }
 
@@ -142,7 +143,10 @@ public class GameOfLife {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     rules(i, j);
+                    
                 }
+                //Thread.sleep(10000);
+                
             }
             Thread.sleep(100);
         }
