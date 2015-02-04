@@ -23,12 +23,15 @@ public class GameOfLife {
     public static Color alive = Color.BLACK;
     public static JPanel[][] panels = new JPanel[rows][cols];
 
-    public static boolean isAlive(int row, int col) {
+    public static int isAlive(int row, int col) {
         //System.out.println("check: " + row + " " + " " + col);
         if (row >= rows || col >= cols || row <= 0 || col <= 0) {
-            return false;
+            return -1;
         }
-        return panels[row][col].getBackground().equals(alive);
+        if(panels[row][col].getBackground().equals(alive)){
+            return 1;
+        }
+        return 0;
     }
 
     public static void rules(int row, int col) {
@@ -52,49 +55,58 @@ public class GameOfLife {
 
         //calculating neighbours
         int neighbours = 0;
-        if (isAlive(row + 1, col)) {
+        if (isAlive(row + 1, col) == 1) {
             neighbours++;
         }
-        if (isAlive(row - 1, col)) {
+        if (isAlive(row - 1, col) == 1) {
             neighbours++;
         }
-        if (isAlive(row, col + 1)) {
+        if (isAlive(row, col + 1) == 1) {
             neighbours++;
         }
-        if (isAlive(row, col - 1)) {
+        if (isAlive(row, col - 1) == 1) {
             neighbours++;
         }
-        if (isAlive(row + 1, col + 1)) {
+        if (isAlive(row + 1, col + 1) == 1) {
             neighbours++;
         }
-        if (isAlive(row - 1, col + 1)) {
+        if (isAlive(row - 1, col + 1) == 1) {
             neighbours++;
         }
-        if (isAlive(row + 1, col - 1)) {
+        if (isAlive(row + 1, col - 1) == 1) {
             neighbours++;
         }
-        if (isAlive(row - 1, col - 1)) {
+        if (isAlive(row - 1, col - 1) == 1) {
             neighbours++;
         }
-        if (isAlive(row, col)) {
+        if (isAlive(row, col) == 1) {
             switch (neighbours) {
                 case 0:
+                    panels[row][col].setBackground(dead);
+                    break;
                 case 1:
                     panels[row][col].setBackground(dead);
                     break;
                 case 2:
+                    break;
                 case 3:
-                    panels[row][col].setBackground(alive);
                     break;
                 case 4:
+                    panels[row][col].setBackground(dead);
+                    break;
                 case 5:
+                    panels[row][col].setBackground(dead);
+                    break;
                 case 6:
+                    panels[row][col].setBackground(dead);
+                    break;
                 case 7:
+                    panels[row][col].setBackground(dead);
+                    break;
                 case 8:
                     panels[row][col].setBackground(dead);
                     break;
             }
-
         } else {
             if(neighbours == 3){
                 panels[row][col].setBackground(alive);
@@ -140,11 +152,7 @@ public class GameOfLife {
             
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    //if (panels[i][j].getBackground().equals(alive)) {
-                    //System.out.println("Found cel that is live - checking rules");
                     rules(i, j);
-                    //Thread.sleep(5);
-                    //}
                 }
             }
             Thread.sleep(200);
